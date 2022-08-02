@@ -1,25 +1,22 @@
 import * as React from 'react';
 
 import { StyleSheet, View } from 'react-native';
-import { EkycIdReactNativeView } from 'ekyc-id-react-native';
+import { DocumentScannerResult, DocumentScannerView } from 'ekyc-id-react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <EkycIdReactNativeView color="#32a852" style={styles.box} />
-    </View>
+    <DocumentScannerView
+      options={{ preparingDuration: 2, }}
+      onDocumentScanned={async (mainSide: DocumentScannerResult, secondarySide?: DocumentScannerResult) => { }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+    backgroundColor: "red",
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });

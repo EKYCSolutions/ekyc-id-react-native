@@ -1,25 +1,34 @@
 package com.ekycidreactnative
 
-import android.view.View
-import android.app.Activity
-import android.view.LayoutInflater
-import com.facebook.react.common.MapBuilder
+import android.annotation.SuppressLint
+import android.util.Log
+import android.view.ViewGroup
+import com.ekycsolutions.ekycid.documentscanner.DocumentScannerCameraView
 import com.facebook.react.bridge.*
+import com.facebook.react.common.MapBuilder
+import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
 
-import com.ekycsolutions.ekycid.documentscanner.DocumentScannerCameraView
 
-class DocumentScannerManager(reactContext: ReactApplicationContext): ViewGroupManager<DocumentScannerCameraView>() {
+class DocumentScannerManager(private val reactContext: ReactApplicationContext): ViewGroupManager<DocumentScannerCameraView>() {
   val TAG = "DocumentScanner"
 
   override fun getName(): String {
     return "DocumentScanner"
   }
 
+  @SuppressLint("ResourceType")
   override fun createViewInstance(context: ThemedReactContext): DocumentScannerCameraView {
-    val cameraViewView: View = LayoutInflater.from(context as Activity).inflate(R.layout.document_scanner_viewfinder, null)
-    return cameraViewView.findViewById(R.id.documentScannerViewFinder)
+    val documentScannerCameraView = DocumentScannerCameraView(context.reactApplicationContext.currentActivity, null)
+    documentScannerCameraView.layoutParams = ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT
+    )
+    Log.d(TAG, ":::: createViewInstance")
+    reactContext.getJSModule(RCTDeviceEventEmitter::class.java).emit("onCreated", null);
+    Log.d(TAG, ":::: createViewInstance - emited")
+    return documentScannerCameraView
   }
 
   override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any>? {
