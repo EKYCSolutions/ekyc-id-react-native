@@ -2,6 +2,7 @@
   package="com.example.ekycidreactnative">
 
     <uses-permission android:name="android.permission.INTERNET" />
+  <uses-feature android:name="android.hardware.camera" />
 
     <application
       android:name=".MainApplication"
