@@ -6,6 +6,7 @@ buildscript {
       google()
       mavenCentral()
       jcenter()
+      mavenLocal()
       maven { url 'https://jitpack.io' }
   }
 
@@ -64,6 +65,7 @@ repositories {
   mavenCentral()
   google()
   jcenter()
+  mavenLocal()
   maven { url 'https://jitpack.io' }
 
   def found = false
@@ -138,7 +140,8 @@ dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  implementation 'com.github.EKYCSolutions:ekyc-id-android:1.0.13'
+  implementation "com.ekycsolutions:ekyc-id:1.0.16"
+//  implementation 'com.github.EKYCSolutions:ekyc-id-android:1.0.15'
 // From node_modules
 }
 

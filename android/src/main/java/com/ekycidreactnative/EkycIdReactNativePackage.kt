@@ -14,5 +14,4 @@ class EkycIdReactNativePackage : ReactPackage {
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
     return listOf()
   }
-
 }

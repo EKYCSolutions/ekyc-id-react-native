@@ -2,7 +2,6 @@
   package="com.example.ekycidreactnative">
 
     <uses-permission android:name="android.permission.INTERNET" />
-  <uses-feature android:name="android.hardware.camera" />
 
     <application
       android:name=".MainApplication"
@@ -23,5 +22,6 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+
     </application>
 </manifest>
