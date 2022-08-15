@@ -1,22 +1,60 @@
 import { NativeModules } from 'react-native';
+import type {
+    DocumentScannerOverlayOptions,
+    DocumentScannerResult,
+    DocumentScannerScannerOptions,
+    LivenessDetectionOverlayOptions,
+    LivenessDetectionResult,
+    LivenessDetectionScannerOptions
+} from './types';
 
 const EkycIDNative = NativeModules.EkycID;
 
+type DocumentScannerResponse = {
+    mainSide: DocumentScannerResult,
+    secondarySide: DocumentScannerResult | null
+}
+
+type LivenessDetectionResponse = {
+    result: LivenessDetectionResult,
+}
+
+type EkycIDExpressResponse = {
+    mainSide: DocumentScannerResult,
+    secondarySide: DocumentScannerResult | null,
+    liveness: LivenessDetectionResult,
+}
+
 class EkycIDWrapper {
-    startDocumentScanner = async () => {
-        const nativeResults = await EkycIDNative.startDocumentScanner();
-        console.log(nativeResults);
+    startDocumentScanner = async (
+        scannerOptions?: DocumentScannerScannerOptions | null,
+        overlayOptions?: DocumentScannerOverlayOptions | null
+    ): Promise<DocumentScannerResponse> => {
+        return await EkycIDNative.startDocumentScanner(scannerOptions, overlayOptions);
     }
 
-    startLivenessDetection = async () => {
-        const nativeResults = await EkycIDNative.startLivenessDetection();
-        console.log(nativeResults);
+    startLivenessDetection = async (
+        scannerOptions?: LivenessDetectionScannerOptions | null,
+        overlayOptions?: LivenessDetectionOverlayOptions | null
+    ): Promise<LivenessDetectionResponse> => {
+        return await EkycIDNative.startLivenessDetection(scannerOptions, overlayOptions);
     }
 
-    startEkycIDExpress = async () => {
-        const nativeResults = await EkycIDNative.startEkycIDExpress();
-        console.log(nativeResults);
+    startEkycIDExpress = async (
+        documentScannerScannerOptions?: DocumentScannerScannerOptions | null,
+        documentScannerOverlayOptions?: DocumentScannerOverlayOptions | null,
+        livenessDetectionScannerOptions?: LivenessDetectionScannerOptions | null,
+        livenessDetectionOverlayOptions?: LivenessDetectionOverlayOptions | null,
+    ): Promise<EkycIDExpressResponse> => {
+        return await EkycIDNative.startEkycIDExpress(
+            documentScannerScannerOptions,
+            documentScannerOverlayOptions,
+            livenessDetectionScannerOptions,
+            livenessDetectionOverlayOptions,
+        );
     }
 }
 
-export var EkycID = new EkycIDWrapper();
+var EkycID = new EkycIDWrapper();
+
+export { EkycID }
