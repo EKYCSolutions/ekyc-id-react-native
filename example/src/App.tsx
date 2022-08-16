@@ -1,12 +1,31 @@
 import * as React from 'react';
 
-import { StyleSheet, View } from 'react-native';
-import { EkycIdReactNativeView } from 'ekyc-id-react-native';
+import { StyleSheet, View, Button } from 'react-native';
+import { EkycID, DocumentScannerScannerOptions, ObjectDetectionObjectType, DocumentScannerOverlayOptions, EkycIDLanguage } from 'ekyc-id-react-native';
 
 export default function App() {
+  const cameraOptions: DocumentScannerScannerOptions = {
+    cameraOptions: {
+      preparingDuration: 3,
+    },
+    scannableDocuments: [
+      {
+        mainSide: ObjectDetectionObjectType.NATIONAL_ID_0,
+        // secondarySide: ObjectDetectionObjectType.NATIONAL_ID_0_BACK,
+      },
+    ],
+  }
+
+  const cameraOverlayOptions: DocumentScannerOverlayOptions = {
+    language: EkycIDLanguage.EN
+  }
+
   return (
-    <View style={styles.container}>
-      <EkycIdReactNativeView color="#32a852" style={styles.box} />
+    <View style={{ flex: 1, width: 100, height: 100, backgroundColor: "red", }}>
+      <Button title='Start Document Scanner' onPress={async () => {
+        const r = await EkycID.startDocumentScanner(cameraOptions, cameraOverlayOptions)
+        console.log(r.mainSide.documentType)
+      }} />
     </View>
   );
 }
@@ -14,12 +33,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+    backgroundColor: "red",
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });

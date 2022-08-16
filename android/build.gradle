@@ -5,10 +5,13 @@ buildscript {
   repositories {
       google()
       mavenCentral()
+      jcenter()
+      mavenLocal()
+      maven { url 'https://jitpack.io' }
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.5.3'
+    classpath 'com.android.tools.build:gradle:3.5.4'
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
@@ -41,6 +44,7 @@ android {
     targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
     buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
   }
+
   buildTypes {
     release {
       minifyEnabled false
@@ -60,6 +64,9 @@ android {
 repositories {
   mavenCentral()
   google()
+  jcenter()
+  mavenLocal()
+  maven { url 'https://jitpack.io' }
 
   def found = false
   def defaultDir = null
@@ -133,6 +140,8 @@ dependencies {
     //noinspection GradleDynamicVersion
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  // implementation "com.ekycsolutions:ekyc-id:1.0.16"
+  implementation 'com.github.EKYCSolutions:ekyc-id-android:1.0.16'
 // From node_modules
 }
 
