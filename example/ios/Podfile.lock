@@ -3,9 +3,9 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - ekyc-id-react-native (0.1.0):
-    - EkycID (~> 1.0.16)
+    - EkycID (~> 1.0.17)
     - React-Core
-  - EkycID (1.0.16):
+  - EkycID (1.0.17):
     - GoogleMLKit/FaceDetection (= 2.5.0)
     - MultipartForm (= 0.1.0)
     - OpenCV (= 4.3.0)
@@ -614,8 +614,8 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  ekyc-id-react-native: becd079df8149cd7a8011ad66a162c94627ace25
-  EkycID: a6949644fbf6b638bcb26f3f94728d2ed2790dc5
+  ekyc-id-react-native: 539f3a67aeab3cd222100d7f499adf33ec971a0c
+  EkycID: 9e2597134b94fabdbc89afe9687bea7e5c46f48b
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
