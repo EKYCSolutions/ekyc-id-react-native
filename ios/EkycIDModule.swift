@@ -150,7 +150,7 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
         }
     
         return DocumentScannerOverlayOptions(
-            language: options!.value(forKey: "language") != nil ? EkycIDLanguage.EN : .KH
+            language: options!.value(forKey: "language") != nil ? EkycIDLanguage.init(rawValue: options!.value(forKey: "language") as! String)! : .KH
         )
     }
     
@@ -188,7 +188,7 @@ extension DocumentScannerResult {
     func toDictionary() -> NSDictionary {
         return [
             "documentType": self.documentType.rawValue,
-            "documentGroup": "Group",
+            "documentGroup": self.documentGroup.rawValue,
             "fullImage": self.fullImage.saveJPGToTemp("doc_full"),
             "documentImage": self.fullImage.saveJPGToTemp("doc_warped"),
             "faceImage": self.fullImage.saveJPGToTemp("face_card"),

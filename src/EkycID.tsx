@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import type {
     DocumentScannerOverlayOptions,
     DocumentScannerResult,
@@ -8,7 +8,10 @@ import type {
     LivenessDetectionScannerOptions
 } from './types';
 
-const EkycIDNative = NativeModules.EkycID;
+const EkycIDNative = Platform.select({
+    ios: NativeModules.EkycIDModule,
+    android: NativeModules.EkycID,
+});
 
 type DocumentScannerResponse = {
     mainSide: DocumentScannerResult,
@@ -30,14 +33,31 @@ class EkycIDWrapper {
         scannerOptions?: DocumentScannerScannerOptions | null,
         overlayOptions?: DocumentScannerOverlayOptions | null
     ): Promise<DocumentScannerResponse> => {
-        return await EkycIDNative.startDocumentScanner(scannerOptions, overlayOptions);
+        const nativeResponse = await EkycIDNative.startDocumentScanner(scannerOptions, overlayOptions);
+
+        if (Platform.OS == 'ios') {
+            return {
+                "mainSide": nativeResponse[0],
+                "secondarySide": nativeResponse.length == 2 ? nativeResponse[1] : null,
+            };
+        }
+
+        return nativeResponse;
     }
 
     startLivenessDetection = async (
         scannerOptions?: LivenessDetectionScannerOptions | null,
         overlayOptions?: LivenessDetectionOverlayOptions | null
     ): Promise<LivenessDetectionResponse> => {
-        return await EkycIDNative.startLivenessDetection(scannerOptions, overlayOptions);
+        const nativeResponse = await EkycIDNative.startLivenessDetection(scannerOptions, overlayOptions);
+
+        if (Platform.OS == 'ios') {
+            return {
+                "result": nativeResponse[0]
+            }
+        }
+
+        return nativeResponse;
     }
 
     startEkycIDExpress = async (
@@ -46,12 +66,22 @@ class EkycIDWrapper {
         livenessDetectionScannerOptions?: LivenessDetectionScannerOptions | null,
         livenessDetectionOverlayOptions?: LivenessDetectionOverlayOptions | null,
     ): Promise<EkycIDExpressResponse> => {
-        return await EkycIDNative.startEkycIDExpress(
+        const nativeResponse = await EkycIDNative.startEkycIDExpress(
             documentScannerScannerOptions,
             documentScannerOverlayOptions,
             livenessDetectionScannerOptions,
             livenessDetectionOverlayOptions,
         );
+
+        if (Platform.OS == 'ios') {
+            return {
+                "mainSide": nativeResponse[0],
+                "secondarySide": nativeResponse.length == 3 ? nativeResponse[1] : null,
+                "liveness": nativeResponse[2],
+            }
+        }
+
+        return nativeResponse;
     }
 }
 
