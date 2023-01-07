@@ -3,10 +3,11 @@ PODS:
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - ekyc-id-react-native (0.1.0):
-    - EkycID (~> 1.0.17)
+    - EkycID (~> 2.0.2)
     - React-Core
-  - EkycID (1.0.17):
+  - EkycID (2.0.2):
     - GoogleMLKit/FaceDetection (= 2.5.0)
+    - lottie-ios (= 3.4.2)
     - MultipartForm (= 0.1.0)
     - OpenCV (= 4.3.0)
     - TensorFlowLiteSwift (= 0.0.1-nightly.20211127)
@@ -102,17 +103,18 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.3.2)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.10.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.10.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.2)
   - hermes-engine (0.11.0)
   - libevent (2.1.12)
+  - lottie-ios (3.4.2)
   - MLImage (1.0.0-beta2)
   - MLKitCommon (5.0.0):
     - GoogleDataTransport (~> 9.0)
@@ -142,7 +144,7 @@ PODS:
   - OpenCV (4.3.0)
   - OpenSSL-Universal (1.1.1100)
   - PromisesObjC (2.1.1)
-  - Protobuf (3.21.5)
+  - Protobuf (3.21.12)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -527,6 +529,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - hermes-engine
     - libevent
+    - lottie-ios
     - MLImage
     - MLKitCommon
     - MLKitFaceDetection
@@ -614,8 +617,8 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
-  ekyc-id-react-native: 539f3a67aeab3cd222100d7f499adf33ec971a0c
-  EkycID: 9e2597134b94fabdbc89afe9687bea7e5c46f48b
+  ekyc-id-react-native: 9e2e01e9a6b3d7c87ba400c9b76278aaff55c30f
+  EkycID: 5d59a0ff11c01f3322bb341ffbc0594c63e5aa4a
   FBLazyVector: a7a655862f6b09625d11c772296b01cd5164b648
   FBReactNativeSpec: 81ce99032d5b586fddd6a38d450f8595f7e04be4
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -632,11 +635,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleMLKit: 0d7f5aa2f8a2f2ea9d849a05abdbe80974b0ec83
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   hermes-engine: 84e3af1ea01dd7351ac5d8689cbbea1f9903ffc3
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: 6bbc53eef6957e4744a50321507015fba72d8ca6
   MLImage: a454f9f8ecfd537783a12f9488f5be1a68820829
   MLKitCommon: 3bc17c6f7d25ce3660f030350b46ae7ec9ebca6e
   MLKitFaceDetection: 617cb847441868a8bfd4b48d751c9b33c1104948
@@ -646,7 +650,7 @@ SPEC CHECKSUMS:
   OpenCV: 681e0451c1e54c5930a8922277f817ed5d5ab459
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Protobuf: 7504b04fffcf6662ad629694db8231f5e744327f
+  Protobuf: 120350fc38646e2dedc26f49ecba778184ea1de2
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 3e917ea5377751094f38145fdece525aa90545a0
   RCTTypeSafety: c43c072a4bd60feb49a9570b0517892b4305c45e
@@ -681,4 +685,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: f04928e61992c156227d203b24bbce1e041848bd
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

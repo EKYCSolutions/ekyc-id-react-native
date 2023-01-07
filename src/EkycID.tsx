@@ -5,7 +5,7 @@ import type {
     DocumentScannerScannerOptions,
     LivenessDetectionOverlayOptions,
     LivenessDetectionResult,
-    LivenessDetectionScannerOptions
+    LivenessDetectionScannerOptions,
 } from './types';
 
 const EkycIDNative = Platform.select({
@@ -33,7 +33,8 @@ class EkycIDWrapper {
         scannerOptions?: DocumentScannerScannerOptions | null,
         overlayOptions?: DocumentScannerOverlayOptions | null
     ): Promise<DocumentScannerResponse> => {
-        const nativeResponse = await EkycIDNative.startDocumentScanner(scannerOptions, overlayOptions);
+
+        const nativeResponse = await EkycIDNative.startDocumentScanner(scannerOptions, {});
 
         if (Platform.OS == 'ios') {
             return {
@@ -49,6 +50,8 @@ class EkycIDWrapper {
         scannerOptions?: LivenessDetectionScannerOptions | null,
         overlayOptions?: LivenessDetectionOverlayOptions | null
     ): Promise<LivenessDetectionResponse> => {
+
+
         const nativeResponse = await EkycIDNative.startLivenessDetection(scannerOptions, overlayOptions);
 
         if (Platform.OS == 'ios') {
@@ -66,6 +69,7 @@ class EkycIDWrapper {
         livenessDetectionScannerOptions?: LivenessDetectionScannerOptions | null,
         livenessDetectionOverlayOptions?: LivenessDetectionOverlayOptions | null,
     ): Promise<EkycIDExpressResponse> => {
+
         const nativeResponse = await EkycIDNative.startEkycIDExpress(
             documentScannerScannerOptions,
             documentScannerOverlayOptions,

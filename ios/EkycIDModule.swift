@@ -5,16 +5,15 @@
 //  Created by Socret Lee on 8/17/22.
 //
 
-import Foundation
-import UIKit
 import AVFoundation
 import EkycID
+import Foundation
+import UIKit
 
 @objc(EkycIDModule)
-class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDetectionViewControllerDelegate, EkycIDExpressViewControllerDelegate  {
-    
-    private var promiseResolver: RCTPromiseResolveBlock? = nil
-    private var promiseRejecter: RCTPromiseRejectBlock? = nil
+class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDetectionViewControllerDelegate, EkycIDExpressViewControllerDelegate {
+    private var promiseResolver: RCTPromiseResolveBlock?
+    private var promiseRejecter: RCTPromiseRejectBlock?
     
     @objc static func requiresMainQueueSetup() -> Bool {
         return true
@@ -25,37 +24,35 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
         overlayOptions: NSDictionary?,
         resolve: @escaping RCTPromiseResolveBlock,
         rejecter reject: @escaping RCTPromiseRejectBlock
-    ) -> Void {
-        
-        prepareScanning(resolve, reject)
+    ) {
+        self.prepareScanning(resolve, reject)
         
         DispatchQueue.main.async {
             let documentScannerView = DocumentScannerViewController()
             documentScannerView.delegate = self
             documentScannerView.scannerOptions = self.buildDocumentScannerScannerOptions(options: scannerOptions)
             documentScannerView.overlayOptions = self.buildDocumentScannerOverlayOptions(options: overlayOptions)
+            print("important", documentScannerView.overlayOptions)
             
-            let rootViewController  = UIApplication.shared.keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             rootViewController?.present(documentScannerView, animated: true)
         }
     }
     
-    @objc func startLivenessScanner(
+    @objc func startLivenessDetection(
         _ scannerOptions: NSDictionary?,
         overlayOptions: NSDictionary?,
         resolve: @escaping RCTPromiseResolveBlock,
         rejecter reject: @escaping RCTPromiseRejectBlock
-    ) -> Void {
-        
-        prepareScanning(resolve, reject)
-        
+    ) {
+        self.prepareScanning(resolve, reject)
         DispatchQueue.main.async {
             let livenessDetectionView = LivenessDetectionViewController()
             livenessDetectionView.delegate = self
             livenessDetectionView.scannerOptions = self.buildLivenessDetectionScannerOptions(options: scannerOptions)
             livenessDetectionView.overlayOptions = self.buildLivenessDetectionOverlayOptions(options: overlayOptions)
 
-            let rootViewController  = UIApplication.shared.keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             rootViewController?.present(livenessDetectionView, animated: true)
         }
     }
@@ -67,9 +64,8 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
         livenessDetectionOverlayOptions: NSDictionary?,
         resolve: @escaping RCTPromiseResolveBlock,
         rejecter reject: @escaping RCTPromiseRejectBlock
-    ) -> Void {
-        
-        prepareScanning(resolve, reject)
+    ) {
+        self.prepareScanning(resolve, reject)
         
         DispatchQueue.main.async {
             let ekycIDExpressView = EkycIDExpressViewController()
@@ -78,7 +74,7 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
             ekycIDExpressView.documentScannerOverlayOptions = self.buildDocumentScannerOverlayOptions(options: documentScannerOverlayOptions)
             ekycIDExpressView.livenessDetectionScannerOptions = self.buildLivenessDetectionScannerOptions(options: livenessDetectionScannerOptions)
             ekycIDExpressView.livenessDetectionOverlayOptions = self.buildLivenessDetectionOverlayOptions(options: livenessDetectionOverlayOptions)
-            let rootViewController  = UIApplication.shared.keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
             rootViewController?.present(ekycIDExpressView, animated: true)
         }
     }
@@ -115,11 +111,11 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
     }
     
     private func buildDocumentScannerScannerOptions(options: NSDictionary?) -> DocumentScannerOptions {
-        if (options == nil) {
-          return DocumentScannerOptions()
+        if options == nil {
+            return DocumentScannerOptions()
         }
         
-        var cameraOptions: DocumentScannerCameraOptions = DocumentScannerCameraOptions()
+        var cameraOptions = DocumentScannerCameraOptions()
         if options!.value(forKey: "cameraOptions") != nil {
             let map = options!.value(forKey: "cameraOptions") as! NSDictionary
             cameraOptions = DocumentScannerCameraOptions(
@@ -132,8 +128,8 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
             let arr: [NSDictionary] = options?.value(forKey: "scannableDocuments") as! [NSDictionary]
             scannableDocuments = arr.map {
                 ScannableDocument(
-                    mainSide: ObjectDetectionObjectType.init(rawValue: $0.value(forKey: "mainSide") as! String)!,
-                    secondarySide: $0.value(forKey: "secondarySide") != nil ? ObjectDetectionObjectType.init(rawValue: $0.value(forKey: "secondarySide") as! String) : nil
+                    mainSide: ObjectDetectionObjectType(rawValue: $0.value(forKey: "mainSide") as! String)!,
+                    secondarySide: $0.value(forKey: "secondarySide") != nil ? ObjectDetectionObjectType(rawValue: $0.value(forKey: "secondarySide") as! String) : nil
                 )
             }
         }
@@ -145,41 +141,44 @@ class EkycIDModule: NSObject, DocumentScannerViewControllerDelegate, LivenessDet
     }
     
     private func buildDocumentScannerOverlayOptions(options: NSDictionary?) -> DocumentScannerOverlayOptions {
-        if (options == nil) {
-          return DocumentScannerOverlayOptions()
+        if options == nil {
+            return DocumentScannerOverlayOptions()
         }
     
         return DocumentScannerOverlayOptions(
-            language: options!.value(forKey: "language") != nil ? EkycIDLanguage.init(rawValue: options!.value(forKey: "language") as! String)! : .KH
+            language: options!.value(forKey: "language") != nil ? EkycIDLanguage(rawValue: options!.value(forKey: "language") as! String)! : .KH
         )
     }
     
     private func buildLivenessDetectionScannerOptions(options: NSDictionary?) -> LivenessDetectionOptions {
-        if (options == nil) {
+        if options == nil {
             return LivenessDetectionOptions()
         }
+
+        print("hello from here")
         
-        var cameraOptions: LivenessDetectionCameraOptions = LivenessDetectionCameraOptions()
+        var cameraOptions = LivenessDetectionCameraOptions()
+        
         if options!.value(forKey: "cameraOptions") != nil {
             let map = options!.value(forKey: "cameraOptions") as! NSDictionary
             cameraOptions = LivenessDetectionCameraOptions(
                 prompts: map.value(forKey: "prompts") != nil ? (map.value(forKey: "prompts") as! [String]).map {
-                    LivenessPromptType.init(rawValue: $0)!
+                    LivenessPromptType(rawValue: $0)!
                 } : [.LOOK_LEFT, .LOOK_RIGHT, .BLINKING],
                 promptTimerCountDownSec: map.value(forKey: "promptTimerCountDownSec") != nil ? map.value(forKey: "promptTimerCountDownSec") as! Int : 5
             )
         }
 
         return LivenessDetectionOptions(cameraOptions: cameraOptions)
-      }
+    }
     
     private func buildLivenessDetectionOverlayOptions(options: NSDictionary?) -> LivenessDetectionOverlayOptions {
-        if (options == nil) {
-          return LivenessDetectionOverlayOptions()
+        if options == nil {
+            return LivenessDetectionOverlayOptions()
         }
     
         return LivenessDetectionOverlayOptions(
-            language: options!.value(forKey: "language") != nil ? EkycIDLanguage.init(rawValue: options!.value(forKey: "language") as! String)! : .KH
+            language: options!.value(forKey: "language") != nil ? EkycIDLanguage(rawValue: options!.value(forKey: "language") as! String)! : .KH
         )
     }
 }
@@ -200,7 +199,7 @@ extension LivenessPrompt {
     func toDictionary() -> NSDictionary {
         return [
             "prompt": self.prompt.rawValue,
-            "success": self.success
+            "success": self.success,
         ]
     }
 }
@@ -226,13 +225,13 @@ extension LivenessDetectionResult {
             "prompts": self.prompts.map { $0.toDictionary() },
             "frontFace": self.frontFace != nil ? self.frontFace!.toDictionary("face_front") : nil,
             "leftFace": self.frontFace != nil ? self.frontFace!.toDictionary("face_left") : nil,
-            "rightFace": self.frontFace != nil ? self.frontFace!.toDictionary("face_right") : nil
+            "rightFace": self.frontFace != nil ? self.frontFace!.toDictionary("face_right") : nil,
         ]
     }
 }
 
 extension UIImage {
-    func saveJPGToTemp(_ name:String) -> String {
+    func saveJPGToTemp(_ name: String) -> String {
         let url = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             .appendingPathComponent(name, isDirectory: false)
             .appendingPathExtension("jpg")
@@ -249,5 +248,3 @@ extension UIImage {
         return url.absoluteString
     }
 }
-
-

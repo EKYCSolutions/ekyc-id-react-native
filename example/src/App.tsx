@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
-import { EkycID, DocumentScannerScannerOptions, ObjectDetectionObjectType, DocumentScannerOverlayOptions, EkycIDLanguage } from 'ekyc-id-react-native';
+import { EkycID, DocumentScannerScannerOptions, ObjectDetectionObjectType, DocumentScannerOverlayOptions, EkycIDLanguage, LivenessDetectionScannerOptions, LivenessPromptType, LivenessDetectionOverlayOptions } from 'ekyc-id-react-native';
 
 export default function App() {
   const cameraOptions: DocumentScannerScannerOptions = {
@@ -17,16 +17,53 @@ export default function App() {
   }
 
   const cameraOverlayOptions: DocumentScannerOverlayOptions = {
-    language: EkycIDLanguage.EN
+    language: EkycIDLanguage.KH
   }
 
+  const livenessScannerOptions: LivenessDetectionScannerOptions = {
+    options: {
+      prompts: [LivenessPromptType.LOOK_LEFT, LivenessPromptType.LOOK_RIGHT, LivenessPromptType.BLINKING],
+      promptTimerCountDownSec: 5
+    }
+  }
+
+  const livenessOverlayOptions: LivenessDetectionOverlayOptions = {
+    language: EkycIDLanguage.KH
+  }
+
+
   return (
-    <View style={{ flex: 1, width: 100, height: 100, backgroundColor: "red", }}>
-      <Button title='Start Document Scanner' onPress={async () => {
-        const r = await EkycID.startDocumentScanner(cameraOptions, cameraOverlayOptions)
-        console.log(r.mainSide.documentType)
-      }} />
+
+    <View style={{ flexDirection: "row" }}>
+
+      <View style={{ flex: 1, width: 100, height: 100, backgroundColor: "red", }}>
+        <Button title='Start Liveness Detection' onPress={async () => {
+          await EkycID.startLivenessDetection(livenessScannerOptions, livenessOverlayOptions)
+        }} />
+      </View>
+
+      <View style={{ flex: 1, width: 100, height: 100, backgroundColor: "red", }}>
+        <Button title='Start Document Scanner' onPress={async () => {
+          await EkycID.startDocumentScanner(cameraOptions, cameraOverlayOptions)
+        }} />
+      </View>
+
+
+      <View style={{ flex: 1, width: 100, height: 100, backgroundColor: "red", }}>
+        <Button title='Start EkycIDExpress' onPress={async () => {
+          await EkycID.startEkycIDExpress(cameraOptions, cameraOverlayOptions, livenessScannerOptions, livenessOverlayOptions)
+
+
+        }} />
+      </View>
+
     </View>
+
+
+
+
+
+
   );
 }
 

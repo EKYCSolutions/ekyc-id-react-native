@@ -90,12 +90,12 @@ type DocumentScannerOverlayOptions = {
 }
 
 type LivenessDetectionCameraOptions = {
-    prompts: [LivenessPromptType],
+    prompts: [LivenessPromptType, LivenessPromptType, LivenessPromptType],
     promptTimerCountDownSec: number
 }
 
 type LivenessDetectionScannerOptions = {
-    cameraOptions: LivenessDetectionCameraOptions,
+    options: LivenessDetectionCameraOptions,
 }
 
 type LivenessDetectionOverlayOptions = {
