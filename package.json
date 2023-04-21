@@ -1,6 +1,6 @@
 {
   "name": "ekyc-id-react-native",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -24,7 +24,7 @@
   "scripts": {
     "test": "jest",
     "typescript": "tsc --noEmit",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
@@ -147,5 +147,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "@ekycsolutions/ekyc-id-react-native": "^0.1.1"
   }
 }

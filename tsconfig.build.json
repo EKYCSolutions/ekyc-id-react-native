@@ -1,5 +1,4 @@
-
 {
-  "extends": "./tsconfig",
+  "extends": ["prettier/@typescript-eslint", "./tsconfig"],
   "exclude": ["example"]
 }
