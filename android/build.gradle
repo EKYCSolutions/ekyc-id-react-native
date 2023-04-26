@@ -138,10 +138,10 @@ def kotlin_version = getExtOrDefault('kotlinVersion')
 
 dependencies {
     //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"
+  implementation "com.facebook.react:react-native:0.68.2"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   // implementation "com.ekycsolutions:ekyc-id:1.0.16"
-  implementation 'com.github.EKYCSolutions:ekyc-id-android:1.0.16'
+  implementation 'com.github.EKYCSolutions:ekyc-id-android:1.0.19'
 // From node_modules
 }
 

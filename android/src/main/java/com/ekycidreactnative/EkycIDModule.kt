@@ -54,6 +54,8 @@ class EkycIDModule(private val reactContext: ReactApplicationContext): ReactCont
     val intent = Intent(reactContext.currentActivity, LivenessDetectionActivity::class.java)
     intent.putExtra("scannerOptions", buildLivenessDetectionScannerOptions(scannerOptions))
     intent.putExtra("overlayOptions", buildLivenessDetectionOverlayOptions(overlayOptions))
+    Log.d(TAG, "startLivenessDetection: intent scannerOptions ${buildLivenessDetectionScannerOptions(scannerOptions)}")
+    Log.d(TAG, "startLivenessDetection: intent overlayOptions ${buildLivenessDetectionScannerOptions(overlayOptions)}")
     startActivityForResult(reactContext.currentActivity!!, intent, LIVENESS_DETECTION_ACITIVITY_CODE, null)
   }
 
@@ -85,6 +87,7 @@ class EkycIDModule(private val reactContext: ReactApplicationContext): ReactCont
   }
 
   override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
+    Log.d(TAG, "onActivityResult: $data")
     if (currentPromise != null) {
       if (resultCode == Activity.RESULT_OK) {
         when (requestCode) {
@@ -102,8 +105,9 @@ class EkycIDModule(private val reactContext: ReactApplicationContext): ReactCont
               currentPromise!!.resolve(MapUtil.toWritableMap(response))
             }
             EKYCID_EXPRESS_ACTIVITY_CODE -> {
+              Log.d("liveness", data!!.getSerializableExtra("liveness").toString())
               val response = hashMapOf<String, Any?>(
-                "liveness" to data!!.getSerializableExtra("result") as HashMap<String, Any?>,
+                "liveness" to data!!.getSerializableExtra("liveness") as HashMap<String, Any?>,
                 "mainSide" to data!!.getSerializableExtra("mainSide") as HashMap<String, Any?>,
                 "secondarySide" to data.getSerializableExtra("secondarySide") as HashMap<String, Any?>?
               )
@@ -190,6 +194,7 @@ class EkycIDModule(private val reactContext: ReactApplicationContext): ReactCont
   }
 
   private fun buildLivenessDetectionScannerOptions(options: ReadableMap?): LivenessDetectionOptions {
+    Log.d(TAG, "buildLivenessDetectionScannerOptions: $options")
     if (options == null) {
       return LivenessDetectionOptions()
     }
@@ -204,6 +209,8 @@ class EkycIDModule(private val reactContext: ReactApplicationContext): ReactCont
     } else {
       LivenessDetectionCameraOptions()
     }
+
+
 
     return LivenessDetectionOptions(
       cameraOptions = cameraOptions,
